@@ -44,17 +44,25 @@ To run any of the solutions, navigate to the respective day's directory and run 
 For example:
 
 ```bash
-cd Day01
-python part2.py
+cd Day01/python
+python3 part2.py test.txt # for testing
+python3 part2.py
 ```
 
 For Rust you have to use the rust project generated in each Day. 
 Make sure you have Rust and Cargo installed.
 You can either test or run the solution:
-```
+
+```bash
 cd Day01/rust
-cargo test
+cargo test #running tests
 cargo run
+```
+
+Using solutions in JavaScript requires NodeJS installed on your system. Then:
+```bash
+cd Day01/js
+node solution.js
 ```
 
 Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.

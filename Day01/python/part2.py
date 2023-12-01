@@ -47,6 +47,6 @@ def sum_calibration_values(file_path):
 # Main execution
 if __name__ == "__main__":
     import sys
-    filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
+    filename = sys.argv[1] if len(sys.argv) > 1 else "../input.txt"
     total_calibration_value = sum_calibration_values(filename)
     print(f"Total Sum of Calibration Values: {total_calibration_value}")
