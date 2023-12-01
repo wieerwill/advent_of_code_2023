@@ -15,7 +15,7 @@ Each day's puzzle solution is in its respective folder, named `DayXX`, where `XX
 Within each folder, you'll find:
 
 - `README.md`: A brief description of the day's problem.
-- Source code files: My solution for the day's puzzle, typically in Python.
+- Source code files: My solution for the day's puzzle, typically in Python or Rust
 - `input.txt`: The input data provided for the puzzle.
 - Additional resources or notes if applicable.
 
@@ -46,6 +46,15 @@ For example:
 ```bash
 cd Day01
 python part2.py
+```
+
+For Rust you have to use the rust project generated in each Day. 
+Make sure you have Rust and Cargo installed.
+You can either test or run the solution:
+```
+cd Day01/rust
+cargo test
+cargo run
 ```
 
 Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.

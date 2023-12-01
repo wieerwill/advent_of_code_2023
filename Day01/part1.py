@@ -45,6 +45,6 @@ def sum_calibration_values(filename):
 
 # Main execution
 if __name__ == "__main__":
-    filename = "coordinates.txt"
+    filename = "input.txt"
     total_calibration_value = sum_calibration_values(filename)
     print(f"Total Sum of Calibration Values: {total_calibration_value}")
