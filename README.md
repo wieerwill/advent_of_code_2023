@@ -1,0 +1,55 @@
+# Advent of Code 2023
+
+## Overview
+Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
+
+## Structure
+This repository is organized to make navigation through the solutions as seamless as possible. 
+Each day's puzzle solution is in its respective folder, named `DayXX`, where `XX` is the day of the month.
+
+- `Day01`
+- `Day02`
+- `...`
+- `Day25`
+
+Within each folder, you'll find:
+
+- `README.md`: A brief description of the day's problem.
+- Source code files: My solution for the day's puzzle, typically in Python.
+- `input.txt`: The input data provided for the puzzle.
+- Additional resources or notes if applicable.
+
+## My Approach
+For Advent of Code 2023, I've decided to primarily use Python due to its readability and the extensive libraries available, which make it an excellent choice for solving diverse and complex problems quickly. In each solution, I focus not only on solving the problem but also on writing clean, efficient, and well-documented code.
+
+## Progress
+Here I'll track my progress throughout the event. 
+I aim to complete each day's puzzle on the same day, but as with any challenge, there might be some delays.
+
+## Progress
+
+| Day | Part One | Part Two | Reflections |
+|-----|----------|----------|-------------|
+| 01  | ✅       | ✅       | [Day01 README](/Day01/README.md) |
+| 02  | ❓       | ❓       | [Day02 README](/Day02/README.md) |
+| ... | ...      | ...      | ...         |
+| 25  | ❓       | ❓       | [Day25 README](/Day25/README.md) |
+
+- ✅ Completed
+- ❓ Not Started / In Progress
+
+## Running the Solutions
+Each solution is a standalone script. 
+To run any of the solutions, navigate to the respective day's directory and run the script using a Python interpreter. 
+For example:
+
+```bash
+cd Day01
+python part2.py
+```
+
+Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.
+
+## Feedback and Collaboration
+I'm always open to feedback and suggestions for improving the solutions. 
+If you have ideas or find an issue, feel free to open an issue or submit a pull request.
