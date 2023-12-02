@@ -47,7 +47,7 @@ For example:
 
 ```bash
 cd Day01/python
-python3 part2.py test.txt # for testing
+python3 part2.py test.txt # for testing (not all Days will have that)
 python3 part2.py
 ```
 
@@ -61,7 +61,15 @@ You can either test or run the solution:
 ```bash
 cd Day01/rust
 cargo test #running tests
-cargo run
+cargo run # run with the actual input file
+```
+
+## C++
+Install a C++ compiler like g++ on your machine. Then:
+```bash
+cd Day01/cpp
+g++ -o solution solution.cpp # compile
+./solution #run the binary
 ```
 
 ## JavaScript
