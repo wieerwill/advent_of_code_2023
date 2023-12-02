@@ -26,13 +26,32 @@ For Advent of Code 2023, I've decided to primarily use Python due to its readabi
 Here I'll track my progress throughout the event. 
 I aim to complete each day's puzzle on the same day, but as with any challenge, there might be some delays.
 
-## Progress
-
 | Day | Part One | Part Two | Reflections |
 |-----|----------|----------|-------------|
 | 01  | ✅       | ✅       | [Day01 README](/Day01/README.md) |
-| 02  | ❓       | ❓       | [Day02 README](/Day02/README.md) |
-| ... | ...      | ...      | ...         |
+| 02  | ✅       | ✅       | [Day02 README](/Day02/README.md) |
+| 03  | ❓       | ❓       | [Day25 README](/Day03/README.md) |
+| 04  | ❓       | ❓       | [Day25 README](/Day04/README.md) |
+| 05  | ❓       | ❓       | [Day25 README](/Day05/README.md) |
+| 06  | ❓       | ❓       | [Day25 README](/Day06/README.md) |
+| 07  | ❓       | ❓       | [Day25 README](/Day07/README.md) |
+| 08  | ❓       | ❓       | [Day25 README](/Day08/README.md) |
+| 09  | ❓       | ❓       | [Day25 README](/Day09/README.md) |
+| 10  | ❓       | ❓       | [Day25 README](/Day10/README.md) |
+| 11  | ❓       | ❓       | [Day25 README](/Day11/README.md) |
+| 12  | ❓       | ❓       | [Day25 README](/Day12/README.md) |
+| 13  | ❓       | ❓       | [Day25 README](/Day13/README.md) |
+| 14  | ❓       | ❓       | [Day25 README](/Day14/README.md) |
+| 15  | ❓       | ❓       | [Day25 README](/Day15/README.md) |
+| 16  | ❓       | ❓       | [Day25 README](/Day16/README.md) |
+| 17  | ❓       | ❓       | [Day25 README](/Day17/README.md) |
+| 18  | ❓       | ❓       | [Day25 README](/Day18/README.md) |
+| 19  | ❓       | ❓       | [Day25 README](/Day19/README.md) |
+| 20  | ❓       | ❓       | [Day25 README](/Day20/README.md) |
+| 21  | ❓       | ❓       | [Day25 README](/Day21/README.md) |
+| 22  | ❓       | ❓       | [Day25 README](/Day22/README.md) |
+| 23  | ❓       | ❓       | [Day25 README](/Day23/README.md) |
+| 24  | ❓       | ❓       | [Day25 README](/Day24/README.md) |
 | 25  | ❓       | ❓       | [Day25 README](/Day25/README.md) |
 
 - ✅ Completed
