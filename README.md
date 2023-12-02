@@ -40,6 +40,8 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 
 ## Running the Solutions
 Each solution is a standalone script. 
+
+## Python
 To run any of the solutions, navigate to the respective day's directory and run the script using a Python interpreter. 
 For example:
 
@@ -49,6 +51,9 @@ python3 part2.py test.txt # for testing
 python3 part2.py
 ```
 
+Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.
+
+## Rust
 For Rust you have to use the rust project generated in each Day. 
 Make sure you have Rust and Cargo installed.
 You can either test or run the solution:
@@ -59,13 +64,19 @@ cargo test #running tests
 cargo run
 ```
 
+## JavaScript
 Using solutions in JavaScript requires NodeJS installed on your system. Then:
 ```bash
 cd Day01/js
 node solution.js
 ```
 
-Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.
+## TypeScript
+Normally you can use compile the TS file to JS using the tsc compiler. But for ease in this simple scripts i suggest installing: `npm install -g typescript ts-node`. With this you can just run the TS file at once and get the output without compiling and running over and over.
+```bash
+cd Day01/ts
+ts-node solution.ts
+```
 
 ## Feedback and Collaboration
 I'm always open to feedback and suggestions for improving the solutions. 
