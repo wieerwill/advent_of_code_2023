@@ -8,10 +8,6 @@ def parse_schematic(file_path):
     except FileNotFoundError:
         raise Exception(f"File not found: {file_path}")
 
-def is_symbol(char):
-    """Checks if a character is a symbol (not a digit or a period)."""
-    return not char.isdigit() and char != '.'
-
 def get_adjacent_positions(rows, cols, row, col):
     """Generates positions adjacent (including diagonally) to the given coordinates."""
     for i in range(max(0, row - 1), min(row + 2, rows)):
