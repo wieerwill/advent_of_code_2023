@@ -66,8 +66,8 @@ For example:
 
 ```bash
 cd Day01/python
-python3 part2.py test.txt # for testing (not all Days will have that)
-python3 part2.py
+python3 solution2.py
+python3 solution2.py
 ```
 
 Make sure you have Python installed on your machine. The solutions are developed using Python 3.x.
@@ -104,6 +104,10 @@ Normally you can use compile the TS file to JS using the tsc compiler. But for e
 cd Day01/ts
 ts-node solution.ts
 ```
+
+---
+
+The first part (less complex) is only solved in Python. Therefore the python folder has always two scripts (solution1.py and solution2.py) to solve both parts. All other languages are only implementing the second part.
 
 ## Feedback and Collaboration
 I'm always open to feedback and suggestions for improving the solutions. 
