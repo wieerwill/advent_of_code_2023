@@ -5,57 +5,57 @@ def free_up_memory():
     """Explicitly frees up memory."""
     gc.collect()
 
-def get_mapped_seed(seed, category_mapping):
-    """Finds the mapped seed for a given seed in a category."""
-    for line in category_mapping:
-        dest_start, source_start, range_length = map(int, line.split())
+def parse_ranges(line):
+    """Parses a line containing seed ranges."""
+    numbers = list(map(int, line.split()))
+    return [(numbers[i], numbers[i + 1]) for i in range(0, len(numbers), 2)]
+
+def map_single_seed_through_category(seed, category_map):
+    """Maps a single seed through a category based on the mapping."""
+    print(f"map seed {seed} in category map")
+    for source_start, (dest_start, range_length) in category_map.items():
         if source_start <= seed < source_start + range_length:
             return dest_start + (seed - source_start)
     return seed
-    
-def process_seed_ranges(seed_ranges, category_mappings):
-    """Processes seed ranges through categories to find the minimum location."""
-    # Processing each seed range through categories
-    min_location = float('inf')
-    for start, end in seed_ranges:
-        print(f"Processing seed range {start} to {end}")
 
-        # If min_location is still inf, then iterate through the range (fallback)
-        if min_location == float('inf'):
-            for seed in range(start, end):
-                location = seed
-                for category_mapping in category_mappings:
-                    location = get_mapped_seed(location, category_mapping)
-                min_location = min(min_location, location)
-    return min_location
+def process_category(file, ranges):
+    """Processes seed ranges through a single category based on the file lines."""
+    category_map = {}
+    for i, line in file:
+        line = line.strip()
+        if not line or ':' in line:  # End of the current category map
+            break
+        dest_start, source_start, range_length = map(int, line.split())
+        category_map[source_start] = (dest_start, range_length)
+        print(f"parsed line {i} in file")
 
-def process_file(file_path, is_test=False):
+    # Process each seed through the category map
+    mapped_seeds = set()
+    for start, length in ranges:
+        print(f"process range {start} with length {length}")
+        for i in range(length):
+            seed = start + i
+            mapped_seed = map_single_seed_through_category(seed, category_map)
+            mapped_seeds.add(mapped_seed)
+
+    return mapped_seeds
+
+def process_file(file_path):
     """Processes the file to find the lowest location number for the seed ranges."""
     try:
         with open(file_path, 'r') as file:
-            lines = file.readlines()
-            # Parsing the seed ranges
-            seed_line = lines[0].strip()
-            parts = seed_line.split(':')[1].split()
-            seed_ranges = [(int(parts[i]), int(parts[i]) + int(parts[i + 1])) 
-                           for i in range(0, len(parts), 2)]
-            # print(f"Seed Ranges: {seed_ranges}")
+            ranges = parse_ranges(file.readline().split(':')[1])
 
-            # Preparing category mappings
-            category_mappings = [[] for _ in range(7)]  # 7 categories
-            current_category = -1
-            for line in lines[1:]:
-                # print(f"processing line {line}")
-                if ':' in line:
-                    current_category += 1
-                elif line.strip():
-                    category_mappings[current_category].append(line.strip())
+            while True:
+                line = file.readline()
+                if not line:  # End of file
+                    break
+                if ':' in line:  # Start of a new category map
+                    ranges = {(seed, 1) for seed in process_category(file, ranges)}
 
-            # Processing each seed range through categories
-            min_location = process_seed_ranges(seed_ranges, category_mappings)
+            lowest_location = min(ranges)[0]
 
-            print(f"Lowest location from {file_path}: {min_location}")
-            return min_location
+            return lowest_location
 
     except FileNotFoundError:
         print(f"Error: File '{file_path}' not found.")
@@ -66,7 +66,7 @@ def test():
     """Run tests using the test.txt file."""
     print("Starting test")
     expected_result = 46  # Updated expected result for the new puzzle
-    result = process_file('../test.txt', is_test=True)
+    result = process_file('../test.txt')
     assert result == expected_result, f"Test failed, expected 46 but got {result}"
     print(f"Test passed: {result}")
 
