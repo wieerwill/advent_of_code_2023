@@ -14,12 +14,10 @@ function extractDigits(line: string): number[] {
     const digitsFound: number[] = [];
     let i = 0;
     while (i < line.length) {
-        let matched = false;
         for (const [word, digit] of Object.entries(digitMap)) {
             if (line.startsWith(word, i)) {
                 digitsFound.push(digit);
                 i += word.length - 1;
-                matched = true;
                 break;
             }
         }

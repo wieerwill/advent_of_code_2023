@@ -1,26 +1,29 @@
 # Performance Analytics
+
 ## Day01
-| Language | Status | Real Time | User Time | Sys Time |
-| --- | --- | --- | --- | --- |
-| Python | 0 | 0m0,071s | 0m0,060s | 0m0,008s |
-| Rust | 0 | 0m0,078s | 0m0,052s | 0m0,026s |
-| JavaScript | 0 | 0m0,089s | 0m0,085s | 0m0,012s |
-| TypeScript | 0 | 0m1,001s | 0m2,188s | 0m0,158s |
+| Language   | Status  | Real Time | User Time | Sys Time |
+| ---------- | ------- | --------- | --------- | -------- |
+| Python     | Success | 0m0,090s  | 0m0,073s  | 0m0,017s |
+| Rust       | Success | 0m0,057s  | 0m0,049s  | 0m0,008s |
+| JavaScript | Success | 0m0,080s  | 0m0,068s  | 0m0,020s |
+| TypeScript | Failed  | -         | -         | -        |
+
 ## Day02
-| Language | Status | Real Time | User Time | Sys Time |
-| --- | --- | --- | --- | --- |
-| Python | 0 | 0m0,032s | 0m0,016s | 0m0,016s |
-| Rust | 0 | 0m0,063s | 0m0,044s | 0m0,020s |
-| JavaScript | 0 | 0m0,044s | 0m0,032s | 0m0,012s |
-| TypeScript | 0 | 0m1,013s | 0m2,059s | 0m0,160s |
+| Language   | Status  | Real Time | User Time | Sys Time |
+| ---------- | ------- | --------- | --------- | -------- |
+| Python     | Success | 0m0,047s  | 0m0,039s  | 0m0,008s |
+| Rust       | Success | 0m0,059s  | 0m0,032s  | 0m0,028s |
+| JavaScript | Success | 0m0,046s  | 0m0,031s  | 0m0,015s |
+| TypeScript | Failed  | -         | -         | -        |
+
 ## Day03
-| Language | Status | Real Time | User Time | Sys Time |
-| --- | --- | --- | --- | --- |
-| Python | 0 | 0m0,054s | 0m0,043s | 0m0,011s |
-| Rust | 0 | 0m0,059s | 0m0,032s | 0m0,024s |
-| JavaScript | 0 | 0m0,067s | 0m0,036s | 0m0,032s |
-| TypeScript | 0 | 0m1,014s | 0m2,128s | 0m0,155s |
+| Language   | Status  | Real Time | User Time | Sys Time |
+| ---------- | ------- | --------- | --------- | -------- |
+| Python     | Success | 0m0,042s  | 0m0,033s  | 0m0,008s |
+| Rust       | Success | 0m0,066s  | 0m0,054s  | 0m0,012s |
+| JavaScript | Success | 0m0,076s  | 0m0,061s  | 0m0,016s |
+| TypeScript | Failed  | -         | -         | -        |
+
 ## Day04
 | Language | Status | Real Time | User Time | Sys Time |
-| --- | --- | --- | --- | --- |
-| Python | 0 | 0m16,137s | 0m16,020s | 0m0,117s |
+| -------- | ------ | --------- | --------- | -------- |

@@ -6,6 +6,6 @@
         "esModuleInterop": true
     },
     "include": [
-        "Day**/{js,ts}/*.ts"
+        "Day**/ts/*.ts"
     ]
 }

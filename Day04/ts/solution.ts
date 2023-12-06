@@ -47,9 +47,13 @@ function processFile(filePath: string): number | null {
         const lines = data.trim().split('\n');
         const cards = lines.map(parseCardData);
         return processCards(cards);
-    } catch (error: any) {
-        console.error(`Error processing file ${filePath}: ${error.message}`);
-        return null;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`Error processing file ${filePath}: ${error.message}`);
+            return null;
+        } else {
+            console.error(`An unknown error occurred`);
+        }
     }
 }
 
@@ -67,8 +71,12 @@ function main() {
         test();
         const totalCards = processFile('../input.txt');
         console.log(`Total cards from input.txt: ${totalCards}`);
-    } catch (error: any) {
-        console.error(`An error occurred: ${error.message}`);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`An error occurred: ${error.message}`);
+        } else {
+            console.error(`An unknown error occurred`);
+        }
     }
 }
 

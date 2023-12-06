@@ -17,44 +17,26 @@ measure_execution_time() {
 
     echo "Running $language script for $day: $runner $script_dir$script_name"
 
-    local real_time=""
-    local user_time=""
-    local sys_time=""
-    local EXEC_STATUS=""
-
     cd "$script_dir"
-    if [ "$language" == "Rust" ]; then
-        if [ -d "$script_dir" ]; then
-            exec 3>&1 4>&2
-            TIME_RESULT=$( { time $runner 1>&3 2>&4; } 2>&1 )
-            EXEC_STATUS=$?
-            exec 3>&- 4>&-
+    if [ -f "$script_name" ] || [ "$language" == "Rust" ]; then
+        exec 3>&1 4>&2
+        TIME_RESULT=$( { time $runner $script_name 1>&3 2>&4; } 2>&1 )
+        EXEC_STATUS=$?
+        exec 3>&- 4>&-
 
+        if [ $EXEC_STATUS -eq 0 ]; then
             real_time=$(echo "$TIME_RESULT" | grep real | awk '{print $2}')
             user_time=$(echo "$TIME_RESULT" | grep user | awk '{print $2}')
             sys_time=$(echo "$TIME_RESULT" | grep sys | awk '{print $2}')
 
-            echo "| $language | $EXEC_STATUS | $real_time | $user_time | $sys_time |" >> "$ROOT_DIR/$ANALYTICS_FILE"
+            echo "| $language | Success | $real_time | $user_time | $sys_time |" >> "$ROOT_DIR/$ANALYTICS_FILE"
         else
-            echo "| $language | rust not executable | - | - | - |" >> "$ROOT_DIR/$ANALYTICS_FILE"
-            echo "Warning: $language script for $day not found or not executable"
+            echo "| $language | Failed | - | - | - |" >> "$ROOT_DIR/$ANALYTICS_FILE"
+            echo "Warning: $language script for $day failed with status $EXEC_STATUS"
         fi
     else
-        if [ -f "$script_name" ]; then
-            exec 3>&1 4>&2
-            TIME_RESULT=$( { time $runner $script_name 1>&3 2>&4; } 2>&1 )
-            EXEC_STATUS=$?
-            exec 3>&- 4>&-
-
-            real_time=$(echo "$TIME_RESULT" | grep real | awk '{print $2}')
-            user_time=$(echo "$TIME_RESULT" | grep user | awk '{print $2}')
-            sys_time=$(echo "$TIME_RESULT" | grep sys | awk '{print $2}')
-
-            echo "| $language | $EXEC_STATUS | $real_time | $user_time | $sys_time |" >> "$ROOT_DIR/$ANALYTICS_FILE"
-        else
-            echo "| $language | Not Found or Not Executable | - | - | - |" >> "$ROOT_DIR/$ANALYTICS_FILE"
-            echo "Warning: $language script for $day not found or not executable"
-        fi
+        echo "| $language | Not Found or Not Executable | - | - | - |" >> "$ROOT_DIR/$ANALYTICS_FILE"
+        echo "Warning: $language script for $day not found or not executable"
     fi
     cd "$ROOT_DIR"
 }
@@ -62,7 +44,8 @@ measure_execution_time() {
 # Loop through each DayXX folder
 for day_folder in $ROOT_DIR/Day*/; do
     day=$(basename "$day_folder")
-    echo "\n## $day" >> $ANALYTICS_FILE
+    echo "" >> $ANALYTICS_FILE
+    echo "## $day" >> $ANALYTICS_FILE
     echo "| Language | Status | Real Time | User Time | Sys Time |" >> $ANALYTICS_FILE
     echo "| --- | --- | --- | --- | --- |" >> $ANALYTICS_FILE
 

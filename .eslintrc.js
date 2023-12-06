@@ -1,4 +1,8 @@
 module.exports = {
+    env: {
+        node: true,  // Indicates that the code runs in a Node.js environment
+        es2021: true
+    },
     root: true,
     parser: "@typescript-eslint/parser",
     parserOptions: {

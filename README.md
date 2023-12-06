@@ -1,5 +1,10 @@
 # 🎄 Advent of Code 2023 🎄
 
+![Build Status](https://github.com/wieerwill/advent_of_code_2023/actions/workflows/lint.yml/badge.svg)
+![Coverage](https://codecov.io/gh/wieerwill/advent_of_code_2023/branch/main/graph/badge.svg)
+![Dependencies Status](https://david-dm.org/wieerwill/advent_of_code_2023.svg)
+![License](https://img.shields.io/github/license/wieerwill/advent_of_code_2023.svg)
+
 Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
 
 ## Structure

@@ -29,7 +29,7 @@ function processCategories(seedsNumbers: number[][], categories: number[][][]): 
     console.log('Processing categories');
     categories.forEach((category, index) => {
         console.log(`Processing category ${index + 1}`);
-        let sources: number[][] = [];
+        const sources: number[][] = [];
         while (seedsNumbers.length) {
             const seedPair = seedsNumbers.pop();
             if (!seedPair) {
