@@ -32,7 +32,7 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 03  | ✅       | ✅       | [Day03 README](/Day03/README.md) |
 | 04  | ✅       | ✅       | [Day04 README](/Day04/README.md) |
 | 05  | ✅       | ✅       | [Day05 README](/Day05/README.md) |
-| 06  | ❓       | ❓       | [Day06 README](/Day06/README.md) |
+| 06  | ✅       | ✅       | [Day06 README](/Day06/README.md) |
 | 07  | ❓       | ❓       | [Day07 README](/Day07/README.md) |
 | 08  | ❓       | ❓       | [Day08 README](/Day08/README.md) |
 | 09  | ❓       | ❓       | [Day09 README](/Day09/README.md) |
