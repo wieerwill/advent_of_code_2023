@@ -1,6 +1,5 @@
-# Advent of Code 2023
+# 🎄 Advent of Code 2023 🎄
 
-## Overview
 Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
 
 ## Structure
@@ -16,13 +15,13 @@ Within each folder, you'll find:
 
 - `README.md`: A brief description of the day's problem.
 - Source code files: My solution for the day's puzzle, typically in Python or Rust
-- `input.txt`: The input data provided for the puzzle.
+- `input.txt`: The input data provided for the puzzle. (add those yourself as we don't provide those for legal reasons)
 - Additional resources or notes if applicable.
 
 ## My Approach
 For Advent of Code 2023, I've decided to primarily use Python due to its readability and the extensive libraries available, which make it an excellent choice for solving diverse and complex problems quickly. In each solution, I focus not only on solving the problem but also on writing clean, efficient, and well-documented code.
 
-## Progress
+## 📈 Progress
 Here I'll track my progress throughout the event. 
 I aim to complete each day's puzzle on the same day, but as with any challenge, there might be some delays.
 
@@ -32,7 +31,7 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 02  | ✅       | ✅       | [Day02 README](/Day02/README.md) |
 | 03  | ✅       | ✅       | [Day03 README](/Day03/README.md) |
 | 04  | ✅       | ✅       | [Day04 README](/Day04/README.md) |
-| 05  | ✅       | ❓       | [Day05 README](/Day05/README.md) |
+| 05  | ✅       | ✅       | [Day05 README](/Day05/README.md) |
 | 06  | ❓       | ❓       | [Day06 README](/Day06/README.md) |
 | 07  | ❓       | ❓       | [Day07 README](/Day07/README.md) |
 | 08  | ❓       | ❓       | [Day08 README](/Day08/README.md) |
