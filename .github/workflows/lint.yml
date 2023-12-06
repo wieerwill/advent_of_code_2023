@@ -57,5 +57,11 @@ jobs:
     # Lint Rust files
     - name: Lint Rust
       run: |
-        cd Day*/rust
-        cargo clippy -- -D warnings
+        for dir in Day*/rust; do
+          if [ -d "$dir" ]; then
+            echo "Linting $dir"
+            cd $dir
+            cargo clippy -- -D warnings
+            cd -  # Go back to the root directory
+          fi
+        done
