@@ -1,0 +1,19 @@
+{
+  "name": "adventofcode2023",
+  "version": "1.0.0",
+  "description": "Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint 'Day**/{js,ts}/*.{js,ts}'",
+    "lint:fix": "eslint 'Day**/{js,ts}/*.{js,ts}' --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0"
+  }
+}
