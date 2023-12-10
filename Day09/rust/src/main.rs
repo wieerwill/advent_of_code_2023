@@ -38,7 +38,10 @@ fn solve_puzzle(filename: &str) -> Result<i32, io::Error> {
         if line.trim().is_empty() {
             continue;
         }
-        let history: Vec<i32> = line.split_whitespace().map(|s| s.parse().unwrap()).collect();
+        let history: Vec<i32> = line
+            .split_whitespace()
+            .map(|s| s.parse().unwrap())
+            .collect();
         let mut diff_table = generate_difference_table(&history);
         let prev_value = extrapolate_previous_value(&mut diff_table);
         total += prev_value;
@@ -51,7 +54,11 @@ fn test() -> Result<(), io::Error> {
     // Runs the test using the test.txt file and asserts the expected outcome
     let expected = 2; // Expected result from the test data for the second part
     let result = solve_puzzle("../test.txt")?;
-    assert_eq!(result, expected, "Test failed: Expected {}, got {}", expected, result);
+    assert_eq!(
+        result, expected,
+        "Test failed: Expected {}, got {}",
+        expected, result
+    );
     println!("Test passed successfully.");
     Ok(())
 }

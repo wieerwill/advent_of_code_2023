@@ -3,6 +3,13 @@ use std::io::{self, BufRead};
 use std::path::Path;
 use std::str::FromStr;
 
+// Define type aliases for clarity
+type SeedNumber = (i32, i32);
+type CategoryItem = (i32, i32, i32);
+type SeedNumbers = Vec<SeedNumber>;
+type Category = Vec<CategoryItem>;
+type Categories = Vec<Category>;
+
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where
     P: AsRef<Path>,
@@ -11,10 +18,10 @@ where
     Ok(io::BufReader::new(file).lines())
 }
 
-fn parse_input(file_path: &str) -> io::Result<(Vec<(i32, i32)>, Vec<Vec<(i32, i32, i32)>>)> {
-    let mut seeds_numbers = Vec::new();
-    let mut categories = Vec::new();
-    let mut current_category = Vec::new();
+fn parse_input(file_path: &str) -> io::Result<(SeedNumbers, Categories)> {
+    let mut seeds_numbers = SeedNumbers::new();
+    let mut categories = Categories::new();
+    let mut current_category = Category::new();
     let mut is_seed_line = true;
 
     for line in read_lines(file_path)? {
@@ -22,14 +29,15 @@ fn parse_input(file_path: &str) -> io::Result<(Vec<(i32, i32)>, Vec<Vec<(i32, i3
         if line.is_empty() {
             if !current_category.is_empty() {
                 categories.push(current_category);
-                current_category = Vec::new();
+                current_category = Category::new();
             }
             is_seed_line = false;
             continue;
         }
 
         if is_seed_line {
-            let seeds_ranges: Vec<i32> = line.split_whitespace()
+            let seeds_ranges: Vec<i32> = line
+                .split_whitespace()
                 .skip(1)
                 .filter_map(|s| i32::from_str(s).ok())
                 .collect();
@@ -40,7 +48,8 @@ fn parse_input(file_path: &str) -> io::Result<(Vec<(i32, i32)>, Vec<Vec<(i32, i3
                 }
             }
         } else {
-            let numbers: Vec<i32> = line.split_whitespace()
+            let numbers: Vec<i32> = line
+                .split_whitespace()
                 .filter_map(|s| i32::from_str(s).ok())
                 .collect();
             if numbers.len() == 3 {
@@ -55,16 +64,19 @@ fn parse_input(file_path: &str) -> io::Result<(Vec<(i32, i32)>, Vec<Vec<(i32, i3
     Ok((seeds_numbers, categories))
 }
 
-fn process_categories(mut seeds_numbers: Vec<(i32, i32)>, categories: Vec<Vec<(i32, i32, i32)>>) -> Vec<(i32, i32)> {
+fn process_categories(mut seeds_numbers: SeedNumbers, categories: Categories) -> SeedNumbers {
     for category in categories {
-        let mut sources = Vec::new();
+        let mut sources = SeedNumbers::new();
         while let Some((start, end)) = seeds_numbers.pop() {
             let mut is_mapped = false;
             for &(destination, source, length) in &category {
                 let overlap_start = std::cmp::max(start, source);
                 let overlap_end = std::cmp::min(end, source + length);
                 if overlap_start < overlap_end {
-                    sources.push((overlap_start - source + destination, overlap_end - source + destination));
+                    sources.push((
+                        overlap_start - source + destination,
+                        overlap_end - source + destination,
+                    ));
                     if overlap_start > start {
                         seeds_numbers.push((start, overlap_start));
                     }
@@ -87,14 +99,22 @@ fn process_categories(mut seeds_numbers: Vec<(i32, i32)>, categories: Vec<Vec<(i
 fn find_lowest_location(file_path: &str) -> io::Result<i32> {
     let (seeds_numbers, categories) = parse_input(file_path)?;
     let processed_seeds = process_categories(seeds_numbers, categories);
-    let lowest_location = processed_seeds.iter().map(|&(start, _)| start).min().unwrap();
+    let lowest_location = processed_seeds
+        .iter()
+        .map(|&(start, _)| start)
+        .min()
+        .unwrap();
     Ok(lowest_location)
 }
 
 fn main() -> io::Result<()> {
     // Test
     let test_result = find_lowest_location("../test.txt")?;
-    assert_eq!(test_result, 46, "Test failed. Expected 46, got {}", test_result);
+    assert_eq!(
+        test_result, 46,
+        "Test failed. Expected 46, got {}",
+        test_result
+    );
     println!("Test passed.");
 
     // Process actual input

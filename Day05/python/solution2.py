@@ -1,10 +1,11 @@
-import os
 import gc
 from itertools import groupby
+
 
 def free_up_memory():
     """Explicitly frees up memory."""
     gc.collect()
+
 
 def parse_input(file_path):
     """Parses the input file into seeds and categories."""
@@ -19,6 +20,7 @@ def parse_input(file_path):
         for i in range(0, len(seeds_ranges), 2)
     ]
     return seeds_numbers, categories
+
 
 def process_categories(seeds_numbers, categories):
     """Processes the seed ranges through all categories."""
@@ -49,6 +51,7 @@ def process_categories(seeds_numbers, categories):
         seeds_numbers = sources
     return seeds_numbers
 
+
 def find_lowest_location(file_path, is_test=False, expected_result=None):
     """Finds the lowest location number from the input file."""
     try:
@@ -57,7 +60,9 @@ def find_lowest_location(file_path, is_test=False, expected_result=None):
         lowest_location = min(seeds_numbers)[0]
 
         if is_test:
-            assert lowest_location == expected_result, f"Test failed, expected {expected_result} but got {lowest_location}"
+            assert (
+                lowest_location == expected_result
+            ), f"Test failed, expected {expected_result} but got {lowest_location}"
             print("Test passed.")
         else:
             print(f"Lowest location from {file_path}: {lowest_location}")
@@ -68,11 +73,13 @@ def find_lowest_location(file_path, is_test=False, expected_result=None):
     except Exception as e:
         print(f"An error occurred processing '{file_path}': {e}")
 
+
 def test():
     """Run tests using the test.txt file."""
     print("Starting test")
     expected_result = 46  # Updated expected result for the new puzzle
-    find_lowest_location('../test.txt', is_test=True, expected_result=expected_result)
+    find_lowest_location("../test.txt", is_test=True, expected_result=expected_result)
+
 
 def main():
     """Main function to process the input file and display results."""
@@ -86,6 +93,7 @@ def main():
 
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

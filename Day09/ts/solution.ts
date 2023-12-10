@@ -2,9 +2,9 @@ import fs from 'fs';
 
 function generateDifferenceTable(history: number[]): number[][] {
     // Generates a difference table for a given history
-    let table: number[][] = [history];
+    const table: number[][] = [history];
     while (!table[table.length - 1].every(value => value === 0)) {
-        let nextRow: number[] = [];
+        const nextRow: number[] = [];
         for (let i = 0; i < table[table.length - 1].length - 1; i++) {
             nextRow.push(table[table.length - 1][i + 1] - table[table.length - 1][i]);
         }

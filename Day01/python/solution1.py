@@ -14,7 +14,7 @@ def extract_calibration_value(line):
         if char.isdigit():
             first_digit = char
             break
-    
+
     # Find the last digit in the line
     for char in reversed(line):
         if char.isdigit():
@@ -27,6 +27,7 @@ def extract_calibration_value(line):
     else:
         return 0
 
+
 def sum_calibration_values(filename):
     """
     Calculate the sum of all calibration values in the document.
@@ -37,11 +38,12 @@ def sum_calibration_values(filename):
     total = 0
 
     # Open the file and process each line
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         for line in file:
             total += extract_calibration_value(line)
 
     return total
+
 
 # Main execution
 if __name__ == "__main__":

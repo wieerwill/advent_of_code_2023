@@ -3,12 +3,13 @@ def parse_input(file_path):
     Parse the input file to extract the race time and record distance.
     Assumes the file has two lines: first for time, second for distance.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         lines = file.readlines()
-        time = int(''.join(filter(str.isdigit, lines[0].strip())))
-        distance = int(''.join(filter(str.isdigit, lines[1].strip())))
+        time = int("".join(filter(str.isdigit, lines[0].strip())))
+        distance = int("".join(filter(str.isdigit, lines[1].strip())))
     print(f"Parsed input from {file_path} - Time: {time}, Distance: {distance}")
     return time, distance
+
 
 def calculate_winning_ways(time, record):
     """
@@ -25,8 +26,11 @@ def calculate_winning_ways(time, record):
         max_hold_time -= 1
 
     winning_ways = max(0, max_hold_time - min_hold_time + 1)
-    print(f"Winning ways calculated: {winning_ways} (Min: {min_hold_time}, Max: {max_hold_time})")
+    print(
+        f"Winning ways calculated: {winning_ways} (Min: {min_hold_time}, Max: {max_hold_time})"
+    )
     return winning_ways
+
 
 def run_test(file_path, expected_result):
     """
@@ -36,8 +40,11 @@ def run_test(file_path, expected_result):
     time, record = parse_input(file_path)
     result = calculate_winning_ways(time, record)
     print(f"Test result: {result}")
-    assert result == expected_result, f"Test failed! Expected {expected_result}, got {result}"
+    assert (
+        result == expected_result
+    ), f"Test failed! Expected {expected_result}, got {result}"
     print("Test passed successfully.")
+
 
 def main():
     """
@@ -60,6 +67,7 @@ def main():
         print(f"Assertion Error: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

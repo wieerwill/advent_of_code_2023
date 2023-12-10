@@ -1,11 +1,16 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
-use std::collections::HashMap;
 
 fn parse_game_data(line: &str) -> (i32, HashMap<String, i32>) {
     let parts: Vec<&str> = line.split(": ").collect();
-    let game_id = parts[0].split_whitespace().nth(1).unwrap().parse::<i32>().unwrap();
+    let game_id = parts[0]
+        .split_whitespace()
+        .nth(1)
+        .unwrap()
+        .parse::<i32>()
+        .unwrap();
     let mut color_counts = HashMap::new();
     color_counts.insert("red".to_string(), 0);
     color_counts.insert("green".to_string(), 0);
@@ -27,7 +32,9 @@ fn parse_game_data(line: &str) -> (i32, HashMap<String, i32>) {
 }
 
 fn calculate_power_of_set(game_data: &HashMap<String, i32>) -> i32 {
-    game_data.get("red").unwrap_or(&0) * game_data.get("green").unwrap_or(&0) * game_data.get("blue").unwrap_or(&0)
+    game_data.get("red").unwrap_or(&0)
+        * game_data.get("green").unwrap_or(&0)
+        * game_data.get("blue").unwrap_or(&0)
 }
 
 fn process_games(file_path: &Path) -> i32 {
@@ -48,10 +55,20 @@ fn process_games(file_path: &Path) -> i32 {
 fn main() {
     // Test the function with test data
     let test_result = process_games(Path::new("../test.txt"));
-    assert_eq!(test_result, 2286, "Test failed: expected sum of powers to be 2286, but got {}", test_result);
-    println!("Test Passed: Sum of powers for the minimum cube sets is {}\n", test_result);
+    assert_eq!(
+        test_result, 2286,
+        "Test failed: expected sum of powers to be 2286, but got {}",
+        test_result
+    );
+    println!(
+        "Test Passed: Sum of powers for the minimum cube sets is {}\n",
+        test_result
+    );
 
     // Process the actual input file
     let result = process_games(Path::new("../input.txt"));
-    println!("From input.txt: Sum of powers for the minimum cube sets is {}", result);
+    println!(
+        "From input.txt: Sum of powers for the minimum cube sets is {}",
+        result
+    );
 }

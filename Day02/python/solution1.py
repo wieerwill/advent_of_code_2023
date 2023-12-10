@@ -8,19 +8,22 @@ def parse_game_data(line):
     Returns:
     int, dict: Game ID and a dictionary with color counts.
     """
-    parts = line.split(': ')
-    game_id = int(parts[0].split(' ')[1])
-    color_counts = {'red': 0, 'green': 0, 'blue': 0}
-    
-    subsets = parts[1].split('; ')
+    parts = line.split(": ")
+    game_id = int(parts[0].split(" ")[1])
+    color_counts = {"red": 0, "green": 0, "blue": 0}
+
+    subsets = parts[1].split("; ")
     for subset in subsets:
-        colors = subset.split(', ')
+        colors = subset.split(", ")
         for color in colors:
-            count, color_name = color.split(' ')
-            color_name = color_name.strip()  # Remove any trailing whitespace or newline characters    
+            count, color_name = color.split(" ")
+            color_name = (
+                color_name.strip()
+            )  # Remove any trailing whitespace or newline characters
             color_counts[color_name] = max(color_counts[color_name], int(count))
-    
+
     return game_id, color_counts
+
 
 def is_game_possible(game_data, red_cubes, green_cubes, blue_cubes):
     """
@@ -35,9 +38,12 @@ def is_game_possible(game_data, red_cubes, green_cubes, blue_cubes):
     Returns:
     bool: True if the game is possible, False otherwise.
     """
-    return (game_data['red'] <= red_cubes and
-            game_data['green'] <= green_cubes and
-            game_data['blue'] <= blue_cubes)
+    return (
+        game_data["red"] <= red_cubes
+        and game_data["green"] <= green_cubes
+        and game_data["blue"] <= blue_cubes
+    )
+
 
 def process_games(file_path, red_cubes, green_cubes, blue_cubes):
     """
@@ -52,7 +58,7 @@ def process_games(file_path, red_cubes, green_cubes, blue_cubes):
     Returns:
     int: Sum of IDs of possible games.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         lines = file.readlines()
 
     sum_of_ids = 0
@@ -63,17 +69,19 @@ def process_games(file_path, red_cubes, green_cubes, blue_cubes):
 
     return sum_of_ids
 
+
 def test():
     print("start testing")
     # Test the function
-    result = process_games('../test.txt', 12, 13, 14)
+    result = process_games("../test.txt", 12, 13, 14)
     # Assertion for testing
     assert result == 8, f"Expected sum of IDs to be 8, but got {result}"
     print(f"Test Passed: Sum of IDs for possible games is {result}\n")
+
 
 # Run the test
 test()
 
 # Process the actual input file
-result = process_games('../input.txt', 12, 13, 14)
+result = process_games("../input.txt", 12, 13, 14)
 print(f"From input.txt: Sum of IDs for possible games is {result}")

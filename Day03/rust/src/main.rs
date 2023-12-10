@@ -21,7 +21,13 @@ fn get_adjacent_positions(rows: usize, cols: usize, row: usize, col: usize) -> V
 }
 
 fn find_start_of_number(schematic: &[String], row: usize, mut col: usize) -> usize {
-    while col > 0 && schematic[row].chars().nth(col - 1).unwrap().is_digit(10) {
+    while col > 0
+        && schematic[row]
+            .chars()
+            .nth(col - 1)
+            .unwrap()
+            .is_ascii_digit()
+    {
         col -= 1;
     }
     col
@@ -32,7 +38,13 @@ fn extract_full_number(schematic: &mut [String], start_row: usize, start_col: us
     let mut number = String::new();
     let mut col = start_col;
 
-    while col < schematic[start_row].len() && schematic[start_row].chars().nth(col).unwrap().is_digit(10) {
+    while col < schematic[start_row].len()
+        && schematic[start_row]
+            .chars()
+            .nth(col)
+            .unwrap()
+            .is_ascii_digit()
+    {
         number.push(schematic[start_row].chars().nth(col).unwrap());
         schematic[start_row].replace_range(col..=col, ".");
         col += 1;
@@ -51,7 +63,7 @@ fn find_gears_and_calculate_ratios(schematic: &mut Vec<String>) -> i32 {
             if schematic[row].chars().nth(col).unwrap() == '*' {
                 let mut part_numbers = Vec::new();
                 for (i, j) in get_adjacent_positions(rows, cols, row, col) {
-                    if schematic[i].chars().nth(j).unwrap().is_digit(10) {
+                    if schematic[i].chars().nth(j).unwrap().is_ascii_digit() {
                         let part_number = extract_full_number(schematic, i, j);
                         if !part_numbers.contains(&part_number) {
                             part_numbers.push(part_number);

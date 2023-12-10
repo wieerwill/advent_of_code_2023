@@ -6,11 +6,25 @@ fn parse_input(file_path: &str) -> io::Result<(i64, i64)> {
     let reader = BufReader::new(file);
 
     let mut lines = reader.lines();
-    let time_line = lines.next().ok_or(io::Error::new(io::ErrorKind::Other, "Missing time line"))??;
-    let distance_line = lines.next().ok_or(io::Error::new(io::ErrorKind::Other, "Missing distance line"))??;
+    let time_line = lines
+        .next()
+        .ok_or_else(|| io::Error::new(io::ErrorKind::Other, "Missing time line"))??;
+    let distance_line = lines
+        .next()
+        .ok_or_else(|| io::Error::new(io::ErrorKind::Other, "Missing distance line"))??;
 
-    let time = time_line.chars().filter(|c| c.is_digit(10)).collect::<String>().parse::<i64>().unwrap_or(0);
-    let distance = distance_line.chars().filter(|c| c.is_digit(10)).collect::<String>().parse::<i64>().unwrap_or(0);
+    let time = time_line
+        .chars()
+        .filter(|c| c.is_ascii_digit())
+        .collect::<String>()
+        .parse::<i64>()
+        .unwrap_or(0);
+    let distance = distance_line
+        .chars()
+        .filter(|c| c.is_ascii_digit())
+        .collect::<String>()
+        .parse::<i64>()
+        .unwrap_or(0);
 
     Ok((time, distance))
 }
@@ -30,7 +44,11 @@ fn calculate_winning_ways(time: i64, record: i64) -> i64 {
 fn run_test(file_path: &str, expected_result: i64) -> io::Result<()> {
     let (time, distance) = parse_input(file_path)?;
     let result = calculate_winning_ways(time, distance);
-    assert_eq!(result, expected_result, "Test failed! Expected {}, got {}", expected_result, result);
+    assert_eq!(
+        result, expected_result,
+        "Test failed! Expected {}, got {}",
+        expected_result, result
+    );
     println!("Test passed successfully.");
     Ok(())
 }

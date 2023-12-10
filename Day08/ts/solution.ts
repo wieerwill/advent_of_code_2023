@@ -3,7 +3,7 @@ import * as path from 'path';
 
 function gcd(a: number, b: number): number {
     while (b !== 0) {
-        let t = b;
+        const t = b;
         b = a % b;
         a = t;
     }
@@ -33,7 +33,7 @@ function parseFile(filePath: string): { steps: number[], rules: { [key: string]:
 function navigateNetworkSimultaneously(steps: number[], rules: { [key: string]: { [key: string]: string } }): number {
     console.log("Starting navigation of network.");
     const startNodes = Object.keys(rules['L']).filter((node: string) => node.endsWith('A'));
-    let currentNodes = startNodes;
+    const currentNodes = startNodes;
     let stepCount = 0;
     const timeToZ: { [key: number]: number } = {};
 
@@ -74,8 +74,8 @@ function main(): void {
         const { steps, rules } = parseFile(inputPath);
         const result = navigateNetworkSimultaneously(steps, rules);
         console.log(`All paths reached 'Z' nodes simultaneously in ${result} steps.`);
-    } catch (error: any) {
-        console.error(`Error: ${error.message}`);
+    } catch (error) {
+        console.error(`Error: ${(error as Error).message}`);
     }
 }
 

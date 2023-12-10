@@ -7,12 +7,11 @@ fn main() {
     match read_lines(path) {
         Ok(lines) => {
             let mut total = 0;
-            for line in lines {
-                if let Ok(ip) = line {
-                    let value = extract_calibration_value(&ip);
-                    println!("Line: '{}', Calibration Value: {}", ip, value);
-                    total += value;
-                }
+            // Using flatten to directly iterate over Ok values
+            for ip in lines.flatten() {
+                let value = extract_calibration_value(&ip);
+                println!("Line: '{}', Calibration Value: {}", ip, value);
+                total += value;
             }
             println!("Total Calibration Value: {}", total);
         }
@@ -39,18 +38,24 @@ fn extract_calibration_value(line: &str) -> u32 {
 
 fn extract_digits(line: &str) -> Vec<u32> {
     let digit_map = vec![
-        ("zero", 0), ("one", 1), ("two", 2), ("three", 3), ("four", 4),
-        ("five", 5), ("six", 6), ("seven", 7), ("eight", 8), ("nine", 9),
+        ("zero", 0),
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
     ];
 
     let mut digits = Vec::new();
     let mut current_line = line.to_string();
 
-    // Iterate over each character in the line
     while !current_line.is_empty() {
         let mut found = false;
 
-        // Check for word representations of digits
         for (word, digit) in &digit_map {
             if current_line.starts_with(word) {
                 digits.push(*digit);
@@ -60,7 +65,6 @@ fn extract_digits(line: &str) -> Vec<u32> {
             }
         }
 
-        // Check for single digit characters
         if !found {
             if let Some(first_char) = current_line.chars().next() {
                 if let Some(digit) = first_char.to_digit(10) {
@@ -91,7 +95,12 @@ mod tests {
         ];
 
         for (input, expected) in test_cases {
-            assert_eq!(extract_calibration_value(input), expected, "Failed on input: {}", input);
+            assert_eq!(
+                extract_calibration_value(input),
+                expected,
+                "Failed on input: {}",
+                input
+            );
         }
     }
 }
