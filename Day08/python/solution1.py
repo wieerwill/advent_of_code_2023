@@ -50,7 +50,7 @@ def run_test():
         expected_result = 6
         instructions, node_map = parse_file("../test.txt")
         result = navigate_network(instructions, node_map)
-        assert result == expected_result, f"Test failed, expected {expected_result} but got {total_winnings}"
+        assert result == expected_result, f"Test failed, expected {expected_result} but got {result}"
         print(f"Test passed with {result} steps.")
     except AssertionError as error:
         print(error)
