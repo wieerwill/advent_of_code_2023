@@ -1,114 +1,105 @@
 def parse_grid(file_path):
-    """Parses the grid from a file and returns it as a 2D list."""
+    """Parses the grid from a file and returns the graph and starting position."""
+    print(f"Parsing grid from file: {file_path}")
+    grid = {}
+    start = None
     try:
-        with open(file_path, "r") as file:
-            grid = [list(line.strip()) for line in file]
-            print(f"Grid parsed from {file_path}:")
-            [print("".join(row)) for row in grid]
-            return grid
+        with open(file_path, 'r') as file:
+            for y, line in enumerate(file.read().splitlines()):
+                for x, char in enumerate(line):
+                    match char:
+                        case "|":
+                            grid[(y, x)] = {(y - 1, x), (y + 1, x)}
+                        case "-":
+                            grid[(y, x)] = {(y, x - 1), (y, x + 1)}
+                        case "L":
+                            grid[(y, x)] = {(y - 1, x), (y, x + 1)}
+                        case "J":
+                            grid[(y, x)] = {(y, x - 1), (y - 1, x)}
+                        case "7":
+                            grid[(y, x)] = {(y, x - 1), (y + 1, x)}
+                        case "F":
+                            grid[(y, x)] = {(y + 1, x), (y, x + 1)}
+                        case "S":
+                            start = (y, x)
+                            grid[(y, x)] = {(y, x - 1), (y, x + 1), (y - 1, x), (y + 1, x)}
+                        case _:
+                            pass
+
+        if start is None:
+            raise ValueError("Start position 'S' not found in the grid.")
+        grid[start] = {dst for dst in grid[start] if start in grid.get(dst, set())}
+        return grid, start
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        raise
     except Exception as e:
-        print(f"Error reading file {file_path}: {e}")
+        print(f"Error parsing grid: {str(e)}")
         raise
 
-
-def create_graph(grid):
-    """Creates a graph from the grid."""
-    graph = {}
-    rows, cols = len(grid), len(grid[0])
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] in "|-LJ7FS":
-                graph[(r, c)] = get_neighbors(grid, r, c)
-    print("Graph created from grid:")
-    print(graph)
-    return graph
-
-
-def get_neighbors(grid, r, c):
-    """Finds the neighbors of a cell in the grid."""
-    neighbors = []
-    rows, cols = len(grid), len(grid[0])
-
-    # Directions: North, East, South, West
-    directions = [(r - 1, c), (r, c + 1), (r + 1, c), (r, c - 1)]
-    connected = {
-        "|": [0, 2],
-        "-": [1, 3],
-        "L": [0, 1],
-        "J": [0, 3],
-        "7": [2, 3],
-        "F": [1, 2],
-        "S": [0, 1, 2, 3],  # 'S' connects in all directions for initial identification
-    }
-
-    for i, (dr, dc) in enumerate(directions):
-        if 0 <= dr < rows and 0 <= dc < cols and grid[dr][dc] != ".":
-            neighbor_type = grid[dr][dc]
-            # Check if there is a valid connection
-            if neighbor_type in connected:
-                if (
-                    i in connected[grid[r][c]] and (3 - i) in connected[neighbor_type]
-                ):  # Check reverse direction
-                    neighbors.append((dr, dc))
-
-    print(f"Neighbors for ({r}, {c}): {neighbors}")
-    return neighbors
-
-
-def bfs(graph, start):
-    """Performs BFS on the graph and returns the maximum distance from the start."""
-    visited = set()
-    queue = [(start, 0)]
-    max_distance = 0
+def find_cycle(grid, start):
+    """Finds all nodes in the cycle starting from the starting position."""
+    print(f"Finding cycle from start position: {start}")
+    seen = {start}
+    queue = [start]
     while queue:
-        node, distance = queue.pop(0)
-        if node != start or len(visited) == 0:  # Allow revisiting start only initially
-            visited.add(node)
+        current = queue.pop(0)
+        for dst in grid[current]:
+            if dst not in seen:
+                seen.add(dst)
+                queue.append(dst)
+    return seen
+
+def bfs_distance(grid, start, target):
+    """Performs BFS to find distance from start to target."""
+    #print(f"Calculating BFS distance from {start} to {target}")
+    queue = [(start, 0)]
+    visited = set()
+    while queue:
+        current, distance = queue.pop(0)
+        if current == target:
+            return distance
+        visited.add(current)
+        for neighbor in grid[current]:
+            if neighbor not in visited:
+                queue.append((neighbor, distance + 1))
+    return -1
+
+def find_longest_distance(grid, cycle, start):
+    """Finds the longest distance from the start in the cycle."""
+    print("Finding longest distance from start in the cycle.")
+    max_distance = 0
+    for node in cycle:
+        if node != start:
+            distance = bfs_distance(grid, start, node)
             max_distance = max(max_distance, distance)
-            print(f"Visited node: {node}, Distance: {distance}")
-            for neighbor in graph[node]:
-                if neighbor not in visited or (neighbor == start and len(visited) > 1):
-                    queue.append((neighbor, distance + 1))
-    print(f"Maximum distance from start: {max_distance}")
     return max_distance
 
+def run(file_path):
+    """Runs the entire algorithm for the given file path."""
+    print(f"Running algorithm for file: {file_path}")
+    grid, start = parse_grid(file_path)
+    cycle = find_cycle(grid, start)
+    longest_distance = find_longest_distance(grid, cycle, start)
+    print(f"Longest distance: {longest_distance}")
+    return longest_distance
 
-def find_start(grid):
-    """Finds the starting position 'S' in the grid."""
-    for r, row in enumerate(grid):
-        for c, cell in enumerate(row):
-            if cell == "S":
-                print(f"Starting position found at: ({r}, {c})")
-                return r, c
-    raise ValueError("Starting position 'S' not found in the grid")
+def test():
+    """Test function to validate the algorithm with a test file."""
+    print("Starting test...")
+    expected_result = 8  # Expected result for the test file
+    result = run("../test.txt")
+    assert result == expected_result, f"Test failed: Expected {expected_result}, got {result}"
+    print("Test passed successfully.")
 
-
-def run_test(file_path):
-    """Runs the algorithm on a test file and asserts the result."""
-    print(f"Running test with file: {file_path}")
-    grid = parse_grid(file_path)
-    graph = create_graph(grid)
-    start = find_start(grid)
-    max_distance = bfs(graph, start)
-    print(f"Max distance for test: {max_distance}")
-    return max_distance
-
-
-def main(file_path):
-    """Main function to run the algorithm on the input file."""
-    print(f"Running main algorithm with file: {file_path}")
-    grid = parse_grid(file_path)
-    graph = create_graph(grid)
-    start = find_start(grid)
-    max_distance = bfs(graph, start)
-    print(f"Max distance for input: {max_distance}")
-    return max_distance
-
+def main():
+    """Main function to run the test and then the algorithm for the input file."""
+    try:
+        test()
+        final_result = run("../input.txt")
+        print(f"Final Result: {final_result}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
-    test_result = run_test("../test.txt")
-    assert test_result == 8, f"Test failed: expected 8, got {test_result}"
-    print(f"Test passed with {test_result}")
-
-    input_result = main("../input.txt")
-    print(f"Result for input file: {input_result}")
+    main()
