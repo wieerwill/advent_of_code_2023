@@ -1,8 +1,8 @@
 # 🎄 Advent of Code 2023 🎄
 
 ![Build Status](https://github.com/wieerwill/advent_of_code_2023/actions/workflows/lint.yml/badge.svg)
-![Coverage](https://codecov.io/gh/wieerwill/advent_of_code_2023/branch/main/graph/badge.svg)
-![Dependencies Status](https://david-dm.org/wieerwill/advent_of_code_2023.svg)
+![Completed](https://img.shields.io/badge/days%20completed-11-red)
+![Stars](https://img.shields.io/badge/stars%20⭐-22-yellow)
 ![License](https://img.shields.io/github/license/wieerwill/advent_of_code_2023.svg)
 
 Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
@@ -41,8 +41,8 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 07  | ✅       | ✅       | [Day07 README](/Day07/README.md) |
 | 08  | ✅       | ✅       | [Day08 README](/Day08/README.md) |
 | 09  | ✅       | ✅       | [Day09 README](/Day09/README.md) |
-| 10  | ❓       | ❓       | [Day10 README](/Day10/README.md) |
-| 11  | ❓       | ❓       | [Day11 README](/Day11/README.md) |
+| 10  | ✅       | ✅       | [Day10 README](/Day10/README.md) |
+| 11  | ✅       | ✅       | [Day11 README](/Day11/README.md) |
 | 12  | ❓       | ❓       | [Day12 README](/Day12/README.md) |
 | 13  | ❓       | ❓       | [Day13 README](/Day13/README.md) |
 | 14  | ❓       | ❓       | [Day14 README](/Day14/README.md) |
