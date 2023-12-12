@@ -45,7 +45,7 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 09  | ✅       | ✅       | [Day09 README](/Day09/README.md) |
 | 10  | ✅       | ✅       | [Day10 README](/Day10/README.md) |
 | 11  | ✅       | ✅       | [Day11 README](/Day11/README.md) |
-| 12  | ❓       | ❓       | [Day12 README](/Day12/README.md) |
+| 12  | ✅       | ❓       | [Day12 README](/Day12/README.md) |
 | 13  | ❓       | ❓       | [Day13 README](/Day13/README.md) |
 | 14  | ❓       | ❓       | [Day14 README](/Day14/README.md) |
 | 15  | ❓       | ❓       | [Day15 README](/Day15/README.md) |
