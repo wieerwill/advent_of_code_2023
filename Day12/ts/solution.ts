@@ -11,7 +11,8 @@ function readData(filePath: string): string[] {
 }
 
 function unfoldRecord(record: string): [string, number[]] {
-    let [dots, blockStr] = record.split(' ');
+    let [dots] = record.split(' ');
+    const [, blockStr] = record.split(' ');
     dots = Array(5).fill(dots).join('?');
     const blocks = blockStr.split(',').map(Number);
     const unfoldedBlocks = Array(5).fill(blocks).flat();
@@ -35,7 +36,7 @@ function countArrangements(dots: string, blocks: number[], i: number = 0, bi: nu
     }
 
     let ans = 0;
-    for (let c of ['.', '#']) {
+    for (const c of ['.', '#']) {
         if (dots[i] === c || dots[i] === '?') {
             if (c === '.') {
                 if (current === 0) {
@@ -55,9 +56,9 @@ function countArrangements(dots: string, blocks: number[], i: number = 0, bi: nu
 
 function solvePuzzle(lines: string[]): number {
     let total = 0;
-    for (let line of lines) {
+    for (const line of lines) {
         console.log(`Processing: ${line}`);
-        let [dots, blocks] = unfoldRecord(line);
+        const [dots, blocks] = unfoldRecord(line);
         total += countArrangements(dots, blocks);
     }
     return total;
