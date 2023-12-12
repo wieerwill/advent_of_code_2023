@@ -1,82 +1,98 @@
-use std::fs;
 use std::collections::HashMap;
+use std::fs;
 
-fn read_data(file_path: &str) -> Result<Vec<String>, String> {
-    fs::read_to_string(file_path)
-        .map_err(|e| e.to_string())
-        .map(|contents| contents.lines().map(String::from).collect())
+#[derive(Debug, Clone)]
+struct Spring {
+    field: Vec<char>,
+    springs: Vec<usize>,
 }
 
-fn unfold_record(record: &str) -> (String, Vec<usize>) {
-    let parts: Vec<&str> = record.split(' ').collect();
-    let dots = parts[0].repeat(5).split("").collect::<Vec<&str>>().join("?");
-    let blocks = parts[1].split(',').map(|x| x.parse::<usize>().unwrap()).collect::<Vec<usize>>();
-    let unfolded_blocks = blocks.iter().flat_map(|&b| vec![b; 5]).collect();
-    (dots, unfolded_blocks)
+fn main() {
+    match test_puzzle("../test.txt") {
+        Ok(_) => println!("Test passed."),
+        Err(e) => println!("Test failed: {}", e),
+    };
+
+    match run_puzzle("../input.txt") {
+        Ok(result) => println!("Final result: {}", result),
+        Err(e) => println!("Error: {}", e),
+    };
 }
 
-fn count_arrangements(dots: &str, blocks: &[usize], i: usize, bi: usize, current: usize, memo: &mut HashMap<(usize, usize, usize), usize>) -> usize {
-    let key = (i, bi, current);
-    if let Some(&result) = memo.get(&key) {
-        return result;
-    }
-
-    if i == dots.len() {
-        return if bi == blocks.len() && current == 0 {
-            1
-        } else {
-            0
-        };
-    }
-
-    let mut ans = 0;
-    let c = dots.chars().nth(i).unwrap();
-
-    if c == '.' || c == '?' {
-        if current == 0 {
-            ans += count_arrangements(dots, blocks, i + 1, bi, 0, memo);
-        } else if bi < blocks.len() && current == blocks[bi] {
-            ans += count_arrangements(dots, blocks, i + 1, bi + 1, 0, memo);
-        }
-    }
-
-    if c == '#' || c == '?' {
-        if bi < blocks.len() && (current + 1 <= blocks[bi]) {
-            ans += count_arrangements(dots, blocks, i + 1, bi, current + 1, memo);
-        }
-    }
-
-    memo.insert(key, ans);
-    ans
+fn run_puzzle(file_path: &str) -> Result<usize, String> {
+    let input = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
+    let springs = parse(&input);
+    Ok(springs.iter().map(|s| s.clone().expand().arrangements()).sum())
 }
 
-fn solve_puzzle(lines: &[String]) -> usize {
-    lines.iter().fold(0, |acc, line| {
-        println!("Processing: {}", line);
-        let (dots, blocks) = unfold_record(line);
-        let line_result = count_arrangements(&dots, &blocks, 0, 0, 0, &mut HashMap::new());
-        println!("Line result: {}", line_result);
-        acc + line_result
-    })
-}
-
-fn test_puzzle() -> Result<(), String> {
-    println!("Running tests...");
-    let test_lines = read_data("../test.txt")?;
-    let test_result = solve_puzzle(&test_lines);
-    println!("Test result: {}", test_result);
-    assert_eq!(test_result, 525152, "Test failed!");
-    println!("Test passed.");
+fn test_puzzle(file_path: &str) -> Result<(), String> {
+    let input = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
+    let springs = parse(&input);
+    let result = springs.iter().map(|s| s.clone().expand().arrangements()).sum::<usize>();
+    assert_eq!(result, 525152, "Test failed!");
     Ok(())
 }
 
-fn main() -> Result<(), String> {
-    test_puzzle()?;
+fn parse(input: &str) -> Vec<Spring> {
+    input
+        .lines()
+        .map(|line| {
+            let (field, springs) = line.split_once(' ').unwrap();
+            let springs = springs.split(',').map(|s| s.parse().unwrap()).collect::<Vec<_>>();
+            let mut field = field.chars().collect::<Vec<_>>();
+            field.push('.');
+            Spring { field, springs }
+        })
+        .collect()
+}
 
-    let input_lines = read_data("../input.txt")?;
-    println!("Processing input data...");
-    let result = solve_puzzle(&input_lines);
-    println!("Final result: {}", result);
+impl Spring {
+    fn arrangements(&self) -> usize {
+        fn count(
+            memo: &mut HashMap<(usize, usize, usize), usize>,
+            spring: &Spring,
+            pos: usize,
+            block: usize,
+            sequences: usize,
+        ) -> usize {
+            if let Some(&res) = memo.get(&(pos, block, sequences)) {
+                return res;
+            }
 
-    Ok(())
+            let mut res = 0;
+            if pos == spring.field.len() {
+                res = (sequences == spring.springs.len()) as usize;
+            } else if spring.field[pos] == '#' {
+                res = count(memo, spring, pos + 1, block + 1, sequences)
+            } else if spring.field[pos] == '.' || sequences == spring.springs.len() {
+                if sequences < spring.springs.len() && block == spring.springs[sequences] {
+                    res = count(memo, spring, pos + 1, 0, sequences + 1)
+                } else if block == 0 {
+                    res = count(memo, spring, pos + 1, 0, sequences)
+                }
+            } else {
+                res += count(memo, spring, pos + 1, block + 1, sequences);
+                if block == spring.springs[sequences] {
+                    res += count(memo, spring, pos + 1, 0, sequences + 1)
+                } else if block == 0 {
+                    res += count(memo, spring, pos + 1, 0, sequences)
+                }
+            }
+
+            memo.insert((pos, block, sequences), res);
+            res
+        }
+
+        count(&mut HashMap::new(), self, 0, 0, 0)
+    }
+
+    fn expand(&self) -> Self {
+        let mut new_field = self.field.clone();
+        *new_field.last_mut().unwrap() = '?';
+
+        Self {
+            field: new_field.repeat(5),
+            springs: self.springs.repeat(5),
+        }
+    }
 }
