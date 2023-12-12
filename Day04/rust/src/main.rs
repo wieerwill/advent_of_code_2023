@@ -88,7 +88,7 @@ fn parse(input: &str) -> Vec<Card> {
 
             let winning = parse(winning);
             let scratch = parse(scratch);
-            
+
             Card {
                 wins: scratch.iter().filter(|x| winning.contains(x)).count() as u8,
             }

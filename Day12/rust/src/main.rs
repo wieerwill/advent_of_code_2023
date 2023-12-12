@@ -22,13 +22,19 @@ fn main() {
 fn run_puzzle(file_path: &str) -> Result<usize, String> {
     let input = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
     let springs = parse(&input);
-    Ok(springs.iter().map(|s| s.clone().expand().arrangements()).sum())
+    Ok(springs
+        .iter()
+        .map(|s| s.clone().expand().arrangements())
+        .sum())
 }
 
 fn test_puzzle(file_path: &str) -> Result<(), String> {
     let input = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
     let springs = parse(&input);
-    let result = springs.iter().map(|s| s.clone().expand().arrangements()).sum::<usize>();
+    let result = springs
+        .iter()
+        .map(|s| s.clone().expand().arrangements())
+        .sum::<usize>();
     assert_eq!(result, 525152, "Test failed!");
     Ok(())
 }
@@ -38,7 +44,10 @@ fn parse(input: &str) -> Vec<Spring> {
         .lines()
         .map(|line| {
             let (field, springs) = line.split_once(' ').unwrap();
-            let springs = springs.split(',').map(|s| s.parse().unwrap()).collect::<Vec<_>>();
+            let springs = springs
+                .split(',')
+                .map(|s| s.parse().unwrap())
+                .collect::<Vec<_>>();
             let mut field = field.chars().collect::<Vec<_>>();
             field.push('.');
             Spring { field, springs }
