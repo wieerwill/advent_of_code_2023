@@ -4,7 +4,7 @@ def parse_grid(file_path):
     grid = {}
     start = None
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             for y, line in enumerate(file.read().splitlines()):
                 for x, char in enumerate(line):
                     match char:
@@ -22,7 +22,12 @@ def parse_grid(file_path):
                             grid[(y, x)] = {(y + 1, x), (y, x + 1)}
                         case "S":
                             start = (y, x)
-                            grid[(y, x)] = {(y, x - 1), (y, x + 1), (y - 1, x), (y + 1, x)}
+                            grid[(y, x)] = {
+                                (y, x - 1),
+                                (y, x + 1),
+                                (y - 1, x),
+                                (y + 1, x),
+                            }
                         case _:
                             pass
 
@@ -37,6 +42,7 @@ def parse_grid(file_path):
         print(f"Error parsing grid: {str(e)}")
         raise
 
+
 def find_cycle(grid, start):
     """Finds all nodes in the cycle starting from the starting position."""
     print(f"Finding cycle from start position: {start}")
@@ -50,9 +56,10 @@ def find_cycle(grid, start):
                 queue.append(dst)
     return seen
 
+
 def bfs_distance(grid, start, target):
     """Performs BFS to find distance from start to target."""
-    #print(f"Calculating BFS distance from {start} to {target}")
+    # print(f"Calculating BFS distance from {start} to {target}")
     queue = [(start, 0)]
     visited = set()
     while queue:
@@ -65,6 +72,7 @@ def bfs_distance(grid, start, target):
                 queue.append((neighbor, distance + 1))
     return -1
 
+
 def find_longest_distance(grid, cycle, start):
     """Finds the longest distance from the start in the cycle."""
     print("Finding longest distance from start in the cycle.")
@@ -75,6 +83,7 @@ def find_longest_distance(grid, cycle, start):
             max_distance = max(max_distance, distance)
     return max_distance
 
+
 def run(file_path):
     """Runs the entire algorithm for the given file path."""
     print(f"Running algorithm for file: {file_path}")
@@ -84,13 +93,17 @@ def run(file_path):
     print(f"Longest distance: {longest_distance}")
     return longest_distance
 
+
 def test():
     """Test function to validate the algorithm with a test file."""
     print("Starting test...")
     expected_result = 8  # Expected result for the test file
     result = run("../test.txt")
-    assert result == expected_result, f"Test failed: Expected {expected_result}, got {result}"
+    assert (
+        result == expected_result
+    ), f"Test failed: Expected {expected_result}, got {result}"
     print("Test passed successfully.")
+
 
 def main():
     """Main function to run the test and then the algorithm for the input file."""
@@ -100,6 +113,7 @@ def main():
         print(f"Final Result: {final_result}")
     except Exception as e:
         print(f"An error occurred: {str(e)}")
+
 
 if __name__ == "__main__":
     main()

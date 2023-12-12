@@ -1,5 +1,7 @@
 # 🎄 Advent of Code 2023 🎄
 
+<div><img src="title_image.png" style="margin: 0 auto;" height="300" width="300" ></div>
+
 ![Build Status](https://github.com/wieerwill/advent_of_code_2023/actions/workflows/lint.yml/badge.svg)
 ![Completed](https://img.shields.io/badge/days%20completed-11-red)
 ![Stars](https://img.shields.io/badge/stars%20⭐-22-yellow)
