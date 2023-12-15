@@ -4,7 +4,7 @@
 
 ![Build Status](https://github.com/wieerwill/advent_of_code_2023/actions/workflows/lint.yml/badge.svg)
 ![Completed](https://img.shields.io/badge/days%20completed-15-red)
-![Stars](https://img.shields.io/badge/stars%20⭐-27-yellow)
+![Stars](https://img.shields.io/badge/stars%20⭐-29-yellow)
 ![License](https://img.shields.io/github/license/wieerwill/advent_of_code_2023.svg)
 
 Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
@@ -46,7 +46,7 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 10  | ✅       | ✅       | [Day10 README](/Day10/README.md) |
 | 11  | ✅       | ✅       | [Day11 README](/Day11/README.md) |
 | 12  | ✅       | ✅       | [Day12 README](/Day12/README.md) |
-| 13  | ❓       | ❓       | [Day13 README](/Day13/README.md) |
+| 13  | ✅       | ✅       | [Day13 README](/Day13/README.md) |
 | 14  | ✅       | ❓       | [Day14 README](/Day14/README.md) |
 | 15  | ✅       | ✅       | [Day15 README](/Day15/README.md) |
 | 16  | ❓       | ❓       | [Day16 README](/Day16/README.md) |

@@ -1,6 +1,7 @@
 import re
 from collections import defaultdict
 
+
 def hash_label(label):
     """Compute hash value for a given label."""
     value = 0
@@ -8,11 +9,12 @@ def hash_label(label):
         value = (value + ord(char)) * 17 % 256
     return value
 
+
 def process_file(file_path):
     """Process the file and return the total focusing power."""
     try:
-        with open(file_path, 'r') as file:
-            line = file.read().replace('\n', '')
+        with open(file_path, "r") as file:
+            line = file.read().replace("\n", "")
 
         boxes = defaultdict(list)
         focal_lengths = {}
@@ -44,11 +46,15 @@ def process_file(file_path):
     except Exception as e:
         print(f"Unexpected error occurred: {e}")
 
+
 def test_algorithm():
     """Test the algorithm with the test file."""
     test_result = process_file("../test.txt")
     print(f"Test Result: {test_result}")
-    assert test_result == 145, f"Test failed. Expected result is 145, got {test_result}."
+    assert (
+        test_result == 145
+    ), f"Test failed. Expected result is 145, got {test_result}."
+
 
 def main():
     """Main function to run the algorithm on the input file."""
@@ -64,6 +70,7 @@ def main():
         print(ae)
     except Exception as e:
         print(f"An error occurred in main: {e}")
+
 
 if __name__ == "__main__":
     main()

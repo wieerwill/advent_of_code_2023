@@ -1,12 +1,13 @@
 def read_grid(file_path):
     """Reads the grid from a file and returns it as a 2D list."""
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             grid = [list(line.strip()) for line in file]
         return grid
     except Exception as e:
         print(f"Error reading file {file_path}: {e}")
         raise
+
 
 def move_rocks_north(grid):
     """Moves all rounded rocks 'O' north as far as possible."""
@@ -15,12 +16,16 @@ def move_rocks_north(grid):
 
     for col in range(cols):
         for row in range(1, rows):  # Start from second row
-            if grid[row][col] == 'O':
+            if grid[row][col] == "O":
                 target_row = row
-                while target_row > 0 and grid[target_row-1][col] == '.':
+                while target_row > 0 and grid[target_row - 1][col] == ".":
                     target_row -= 1
                 if target_row != row:
-                    grid[target_row][col], grid[row][col] = grid[row][col], grid[target_row][col]
+                    grid[target_row][col], grid[row][col] = (
+                        grid[row][col],
+                        grid[target_row][col],
+                    )
+
 
 def calculate_load(grid):
     """Calculates the total load on the north support beams."""
@@ -29,10 +34,11 @@ def calculate_load(grid):
 
     for row in range(rows):
         for cell in grid[row]:
-            if cell == 'O':
-                total_load += (rows - row)
+            if cell == "O":
+                total_load += rows - row
 
     return total_load
+
 
 def run_simulation(file_path):
     """Runs the rock-moving simulation and returns the total load."""
@@ -40,19 +46,20 @@ def run_simulation(file_path):
         grid = read_grid(file_path)
         print(f"Initial Grid from {file_path}:")
         for row in grid:
-            print(''.join(row))
+            print("".join(row))
 
         move_rocks_north(grid)
 
         print(f"Grid after moving rocks north from {file_path}:")
         for row in grid:
-            print(''.join(row))
+            print("".join(row))
 
         total_load = calculate_load(grid)
         return total_load
     except Exception as e:
         print(f"Error during simulation for file {file_path}: {e}")
         raise
+
 
 def test_simulation():
     """Runs test simulation and asserts the expected output."""
@@ -63,8 +70,11 @@ def test_simulation():
     actual_load = run_simulation(test_file)
     print(f"Test simulation load: {actual_load}")
 
-    assert actual_load == expected_load, f"Test failed: expected {expected_load}, got {actual_load}"
+    assert (
+        actual_load == expected_load
+    ), f"Test failed: expected {expected_load}, got {actual_load}"
     print("Test passed successfully.")
+
 
 def main():
     """Main function to run the test and then the actual simulation."""
@@ -77,6 +87,7 @@ def main():
         print(f"Total load from actual simulation: {total_load}")
     except Exception as e:
         print(f"Error in main function: {e}")
+
 
 # Run the main function
 if __name__ == "__main__":

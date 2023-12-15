@@ -1,5 +1,6 @@
 from itertools import groupby
 
+
 def find_mirror(group):
     """
     Find the line of symmetry in the pattern.
@@ -14,6 +15,7 @@ def find_mirror(group):
             return i
     return 0
 
+
 def process_file(filename):
     """
     Process the given file to find the sum of mirror lines.
@@ -23,7 +25,9 @@ def process_file(filename):
         with open(filename) as f:
             lines = f.read().splitlines()
 
-        groups = [tuple(group) for not_empty, group in groupby(lines, bool) if not_empty]
+        groups = [
+            tuple(group) for not_empty, group in groupby(lines, bool) if not_empty
+        ]
 
         res = 0
         for group in groups:
@@ -31,12 +35,13 @@ def process_file(filename):
             res += find_mirror(group) * 100
             # Horizontal reflection
             res += find_mirror(tuple(zip(*group)))
-        
+
         return res
 
     except Exception as e:
         print(f"Error processing file {filename}: {e}")
         raise
+
 
 def test():
     """
@@ -52,6 +57,7 @@ def test():
     except Exception as e:
         print(f"Test error: {e}")
 
+
 def main():
     """
     Main function to run the test and then process the actual input file.
@@ -62,6 +68,7 @@ def main():
     print("\nProcessing main input file...")
     final_result = process_file("../input.txt")
     print(f"Final result: {final_result}")
+
 
 if __name__ == "__main__":
     main()

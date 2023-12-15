@@ -11,7 +11,7 @@ function processSteps(steps) {
     const focalLengths = new Map();
 
     steps.forEach(step => {
-        const [_, label, operation, focalLength] = step.match(/([a-z]+)([=-])(\d)?/);
+        const [, label, operation, focalLength] = step.match(/([a-z]+)([=-])(\d)?/);
         const hashed = hashLabel(label);
         const destination = boxes[hashed];
 

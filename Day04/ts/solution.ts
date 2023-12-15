@@ -1,83 +1,85 @@
-import * as fs from 'fs';
+import { readFileSync } from "fs";
 
-interface Card {
-    cardNumber: number;
-    winningNumbers: Set<number>;
-    ownNumbers: number[];
-}
-
-// Parses a line of card data and returns the card number, winning numbers, and own numbers
-function parseCardData(line: string): Card {
-    const [cardInfo, numberParts] = line.split(':');
-    const [winningPart, ownPart] = numberParts.split('|');
-    const cardNumber = parseInt(cardInfo.match(/\d+/)![0], 10);
-    const winningNumbers = new Set(winningPart.trim().split(/\s+/).map(Number));
-    const ownNumbers = ownPart.trim().split(/\s+/).map(Number);
-    return { cardNumber, winningNumbers, ownNumbers };
-}
-
-// Calculates the number of matches for a card
-function calculateMatches(winningNumbers: Set<number>, ownNumbers: number[]): number {
-    return ownNumbers.reduce((count, number) => count + (winningNumbers.has(number) ? 1 : 0), 0);
-}
-
-// Processes the cards and returns the total number of cards including copies
-function processCards(cards: Card[]): number {
-    let totalCards = cards.length;
-    const queue: Card[] = cards.slice(); // Clone the original array to avoid modifying it
-
-    while (queue.length > 0) {
-        const currentCard = queue.shift()!;
-        const matches = calculateMatches(currentCard.winningNumbers, currentCard.ownNumbers);
-        for (let i = 1; i <= matches; i++) {
-            if (currentCard.cardNumber + i < cards.length) {
-                totalCards++;
-                queue.push(cards[currentCard.cardNumber + i - 1]);
-            }
-        }
-    }
-
-    return totalCards;
-}
-
-// Reads the file and processes the cards
-function processFile(filePath: string): number | null {
-    try {
-        const data = fs.readFileSync(filePath, 'utf-8');
-        const lines = data.trim().split('\n');
-        const cards = lines.map(parseCardData);
-        return processCards(cards);
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(`Error processing file ${filePath}: ${error.message}`);
-            return null;
-        } else {
-            console.error(`An unknown error occurred`);
-        }
-    }
-}
-
-// Test function
-function test() {
-    const expectedResult = 30;
-    const result = processFile('../test.txt');
-    console.assert(result === expectedResult, `Test failed: Expected ${expectedResult}, got ${result}`);
-    console.log(`Test passed: ${result} cards`);
-}
-
-// Main function
 function main() {
     try {
-        test();
-        const totalCards = processFile('../input.txt');
-        console.log(`Total cards from input.txt: ${totalCards}`);
+        console.log("Running tests...");
+        runTest("../test.txt");
+        console.log("Tests passed.");
+
+        console.log("Processing main input...");
+        const result = processInput("../input.txt");
+        console.log(`Puzzle result: ${result}`);
     } catch (error) {
-        if (error instanceof Error) {
-            console.error(`An error occurred: ${error.message}`);
-        } else {
-            console.error(`An unknown error occurred`);
+        console.error(`Error: ${error}`);
+    }
+}
+
+function runTest(filename: string) {
+    const input = readFile(filename);
+    const cards = parse(input);
+
+    const partAResult = partA(cards);
+    const partBResult = partB(cards);
+
+    console.assert(partAResult === 13, `Part A Test failed: Expected 13, got ${partAResult}`);
+    console.assert(partBResult === 30, `Part B Test failed: Expected 30, got ${partBResult}`);
+}
+
+function processInput(filename: string): number {
+    const input = readFile(filename);
+    const cards = parse(input);
+
+    return partA(cards) + partB(cards);
+}
+
+function partA(cards: Card[]): number {
+    return cards
+        .filter(card => card.wins > 0)
+        .map(card => Math.pow(2, card.wins - 1))
+        .reduce((a, b) => a + b, 0);
+}
+
+function partB(cards: Card[]): number {
+    const queue = Array.from(Array(cards.length).keys());
+    let visited = 0;
+
+    while (queue.length > 0) {
+        const i = queue.pop()!;
+        visited++;
+
+        const card = cards[i];
+        if (card.wins === 0) continue;
+
+        for (let j = 0; j < card.wins; j++) {
+            queue.push(j + i + 1);
         }
     }
+
+    return visited;
+}
+
+function readFile(filename: string): string {
+    try {
+        return readFileSync(filename, 'utf-8');
+    } catch (error) {
+        throw new Error(`Failed to read file '${filename}': ${error}`);
+    }
+}
+
+function parse(input: string): Card[] {
+    return input.split('\n').map(line => {
+        const [winning, scratch] = line.split(': ')[1].split(' | ').map(parseNumbers);
+        const wins = scratch.filter(x => winning.includes(x)).length;
+        return new Card(wins);
+    });
+}
+
+function parseNumbers(input: string): number[] {
+    return input.split(' ').map(Number);
+}
+
+class Card {
+    constructor(public wins: number) {}
 }
 
 main();

@@ -1,5 +1,6 @@
 from itertools import groupby
 
+
 def find_mirror(group):
     """
     Find the line of symmetry in the pattern, considering there may be one smudge.
@@ -12,6 +13,7 @@ def find_mirror(group):
             return i
     return 0
 
+
 def process_file(filename):
     """
     Process the given file to find the sum of mirror lines considering smudges.
@@ -20,7 +22,9 @@ def process_file(filename):
         with open(filename) as f:
             lines = f.read().splitlines()
 
-        groups = [tuple(group) for not_empty, group in groupby(lines, bool) if not_empty]
+        groups = [
+            tuple(group) for not_empty, group in groupby(lines, bool) if not_empty
+        ]
 
         res = 0
         for group in groups:
@@ -28,12 +32,13 @@ def process_file(filename):
             res += find_mirror(group) * 100
             # Horizontal reflection
             res += find_mirror(tuple(zip(*group)))
-        
+
         return res
 
     except Exception as e:
         print(f"Error processing file {filename}: {e}")
         raise
+
 
 def test():
     """
@@ -42,13 +47,18 @@ def test():
     try:
         test_result = process_file("../test.txt")
         print(f"Test result: {test_result}")
-        expected_result = 400  # Adjust this based on the expected outcome of the test data
-        assert test_result == expected_result, f"Test failed. Expected result is {expected_result}."
+        expected_result = (
+            400  # Adjust this based on the expected outcome of the test data
+        )
+        assert (
+            test_result == expected_result
+        ), f"Test failed. Expected result is {expected_result}."
         print("Test passed.")
     except AssertionError as ae:
         print(ae)
     except Exception as e:
         print(f"Test error: {e}")
+
 
 def main():
     """
@@ -56,12 +66,13 @@ def main():
     """
     print("Starting tests...")
     test()
-    
+
     try:
         final_result = process_file("../input.txt")
         print(f"Final result: {final_result}")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

@@ -1,68 +1,76 @@
 const fs = require('fs');
+const path = require('path');
 
-// Parses a line of card data and returns the card number, winning numbers, and own numbers
-function parseCardData(line) {
-    const [cardInfo, numberParts] = line.split(':');
-    const [winningPart, ownPart] = numberParts.split('|');
-    const cardNumber = parseInt(cardInfo.match(/\d+/)[0], 10);
-    const winningNumbers = new Set(winningPart.trim().split(/\s+/).map(Number));
-    const ownNumbers = ownPart.trim().split(/\s+/).map(Number);
-    return { cardNumber, winningNumbers, ownNumbers };
+function main() {
+    try {
+        // Run tests
+        const testCards = parseInput(path.join(__dirname, '../test.txt'));
+        assert(partA(testCards) === 13, 'Part A test failed');
+        assert(partB(testCards) === 30, 'Part B test failed');
+        console.log('All tests passed.');
+
+        // Process main input
+        const mainCards = parseInput(path.join(__dirname, '../input.txt'));
+        const result = partA(mainCards) + partB(mainCards);
+        console.log(`Puzzle result: ${result}`);
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+    }
 }
 
-// Calculates the number of matches for a card
-function calculateMatches(winningNumbers, ownNumbers) {
-    return ownNumbers.reduce((count, number) => count + winningNumbers.has(number), 0);
+function partA(cards) {
+    // Calculate the sum of scores for each card in part A
+    return cards.reduce((sum, card) => {
+        return sum + (card.wins > 0 ? Math.pow(2, card.wins - 1) : 0);
+    }, 0);
 }
 
-// Processes the cards and returns the total number of cards including copies
-function processCards(cards) {
-    let totalCards = cards.length;
-    const queue = cards.slice(); // Clone the original array to avoid modifying it
+function partB(cards) {
+    // Calculate the count for part B logic
+    let queue = [...Array(cards.length).keys()];
+    let visited = 0;
 
-    while (queue.length > 0) {
-        const currentCard = queue.shift();
-        const matches = calculateMatches(currentCard.winningNumbers, currentCard.ownNumbers);
-        for (let i = 1; i <= matches; i++) {
-            if (currentCard.cardNumber + i < cards.length) {
-                totalCards++;
-                queue.push(cards[currentCard.cardNumber + i - 1]);
+    while (queue.length) {
+        const i = queue.pop();
+        visited++;
+
+        const card = cards[i];
+        if (card.wins === 0) continue;
+
+        for (let j = 0; j < card.wins; j++) {
+            if (j + i + 1 < cards.length) {
+                queue.push(j + i + 1);
             }
         }
     }
 
-    return totalCards;
+    return visited;
 }
 
-// Reads the file and processes the cards
-function processFile(filePath) {
+function parseInput(filePath) {
+    // Read and parse input file into an array of card objects
     try {
-        const data = fs.readFileSync(filePath, 'utf-8');
-        const lines = data.trim().split('\n');
-        const cards = lines.map(parseCardData);
-        return processCards(cards);
+        const data = fs.readFileSync(filePath, 'utf8');
+        return data.trim().split('\n').map(parseCard);
     } catch (error) {
-        console.error(`Error processing file ${filePath}: ${error.message}`);
-        return null;
+        throw new Error(`Failed to read file at ${filePath}: ${error.message}`);
     }
 }
 
-// Test function
-function test() {
-    const expectedResult = 30;
-    const result = processFile('../test.txt');
-    console.assert(result === expectedResult, `Test failed: Expected ${expectedResult}, got ${result}`);
-    console.log(`Test passed: ${result} cards`);
+function parseCard(line) {
+    // Parse a single line into a card object
+    const [, cardInfo] = line.split(': ');
+    const [winning, scratch] = cardInfo.split(' | ').map(s => s.split(' ').map(Number));
+    const winningSet = new Set(winning);
+    const wins = scratch.reduce((count, num) => count + (winningSet.has(num) ? 1 : 0), 0);
+
+    return { wins };
 }
 
-// Main function
-function main() {
-    try {
-        test();
-        const totalCards = processFile('../input.txt');
-        console.log(`Total cards from input.txt: ${totalCards}`);
-    } catch (error) {
-        console.error(`An error occurred: ${error.message}`);
+function assert(condition, message) {
+    // Simple assertion function
+    if (!condition) {
+        throw new Error(message);
     }
 }
 

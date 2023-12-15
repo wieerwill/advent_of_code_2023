@@ -2,7 +2,9 @@ use std::collections::HashMap;
 use std::fs;
 
 fn hash_label(label: &str) -> usize {
-    label.chars().fold(0, |acc, c| (acc + (c as usize)) * 17 % 256)
+    label
+        .chars()
+        .fold(0, |acc, c| (acc + (c as usize)) * 17 % 256)
 }
 
 fn process_steps(steps: Vec<&str>) -> usize {
@@ -22,11 +24,11 @@ fn process_steps(steps: Vec<&str>) -> usize {
                     boxes[hashed].push(label.to_string());
                 }
                 focal_lengths.insert(label.to_string(), focal_length);
-            },
+            }
             '-' => {
                 boxes[hashed].retain(|l| l != label);
                 focal_lengths.remove(label);
-            },
+            }
             _ => panic!("Invalid operation character: {}", operation),
         }
     }
@@ -39,9 +41,14 @@ fn process_steps(steps: Vec<&str>) -> usize {
 }
 
 fn parse_step(step: &str) -> (&str, char, &str) {
-    let operation_index = step.find(|c: char| c == '=' || c == '-').expect("Invalid step format");
+    let operation_index = step
+        .find(|c: char| c == '=' || c == '-')
+        .expect("Invalid step format");
     let label = &step[..operation_index];
-    let operation = step.chars().nth(operation_index).expect("Invalid step format");
+    let operation = step
+        .chars()
+        .nth(operation_index)
+        .expect("Invalid step format");
     let value = &step[operation_index + 1..];
 
     (label, operation, value)
@@ -57,7 +64,11 @@ fn test_algorithm() {
     let test_result = process_steps(test_steps);
 
     println!("Test Result: {}", test_result);
-    assert_eq!(test_result, 145, "Test failed. Expected result is 145, got {}.", test_result);
+    assert_eq!(
+        test_result, 145,
+        "Test failed. Expected result is 145, got {}.",
+        test_result
+    );
 }
 
 fn main() {
