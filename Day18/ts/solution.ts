@@ -14,7 +14,7 @@ function parseInstructions(filePath: string): string[] {
 
 function calculateArea(lines: string[]): number {
     const DIRECTIONS: [number, number][] = [[0, 1], [1, 0], [0, -1], [-1, 0]];
-    let points: [number, number][] = [[0, 0]];
+    const points: [number, number][] = [[0, 0]];
     let boundary: number = 0;
 
     for (const line of lines) {

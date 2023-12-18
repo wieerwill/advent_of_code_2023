@@ -1,7 +1,7 @@
 def parse_instructions(file_path):
     """Parse instructions from the given file."""
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             instructions = [line.strip().split() for line in file.readlines()]
             print(f"Parsed {len(instructions)} instructions from {file_path}")
             return instructions
@@ -9,15 +9,17 @@ def parse_instructions(file_path):
         print(f"Error reading file {file_path}: {e}")
         raise
 
+
 def apply_instruction(grid, position, direction, steps):
     """Apply a single instruction to the grid and update the position."""
-    deltas = {'U': (0, -1), 'D': (0, 1), 'L': (-1, 0), 'R': (1, 0)}
+    deltas = {"U": (0, -1), "D": (0, 1), "L": (-1, 0), "R": (1, 0)}
     dx, dy = deltas[direction]
     for _ in range(steps):
         position = (position[0] + dx, position[1] + dy)
         grid.add(position)
-        #print(f"Moved {direction} to {position}")
+        # print(f"Moved {direction} to {position}")
     return position
+
 
 def create_path(instructions):
     """Create the path based on the instructions."""
@@ -29,28 +31,36 @@ def create_path(instructions):
         direction, steps = instruction[0], int(instruction[1])
         print(f"Applying instruction: {direction} {steps}")
         position = apply_instruction(grid, position, direction, steps)
-    
+
     return grid
+
 
 def flood_fill(grid, bounds):
     """Perform flood-fill to find cells outside the path."""
     filled = set()
-    to_fill = [(bounds[0], y) for y in range(bounds[2], bounds[3] + 1)] \
-            + [(bounds[1], y) for y in range(bounds[2], bounds[3] + 1)] \
-            + [(x, bounds[2]) for x in range(bounds[0], bounds[1] + 1)] \
-            + [(x, bounds[3]) for x in range(bounds[0], bounds[1] + 1)]
+    to_fill = (
+        [(bounds[0], y) for y in range(bounds[2], bounds[3] + 1)]
+        + [(bounds[1], y) for y in range(bounds[2], bounds[3] + 1)]
+        + [(x, bounds[2]) for x in range(bounds[0], bounds[1] + 1)]
+        + [(x, bounds[3]) for x in range(bounds[0], bounds[1] + 1)]
+    )
 
     while to_fill:
         x, y = to_fill.pop()
         if (x, y) in filled or (x, y) in grid:
             continue
         filled.add((x, y))
-        if x > bounds[0]: to_fill.append((x - 1, y))
-        if x < bounds[1]: to_fill.append((x + 1, y))
-        if y > bounds[2]: to_fill.append((x, y - 1))
-        if y < bounds[3]: to_fill.append((x, y + 1))
+        if x > bounds[0]:
+            to_fill.append((x - 1, y))
+        if x < bounds[1]:
+            to_fill.append((x + 1, y))
+        if y > bounds[2]:
+            to_fill.append((x, y - 1))
+        if y < bounds[3]:
+            to_fill.append((x, y + 1))
 
     return filled
+
 
 def calculate_area(grid):
     """Calculate the area inside the loop."""
@@ -66,6 +76,7 @@ def calculate_area(grid):
 
     return inside_area
 
+
 def run_test(test_file):
     """Run the algorithm with test input."""
     try:
@@ -78,6 +89,7 @@ def run_test(test_file):
     except AssertionError as e:
         print(f"Assertion Error: {e}")
         return False
+
 
 def main():
     """Main function to run the puzzle solution."""
@@ -96,6 +108,7 @@ def main():
             print(f"Error during puzzle execution: {e}")
     else:
         print("Test failed. Halting execution.")
+
 
 if __name__ == "__main__":
     main()
