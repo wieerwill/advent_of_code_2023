@@ -3,8 +3,8 @@
 <div><img src="title_image.png" style="margin: 0 auto;" height="300" width="300" ></div>
 
 ![Build Status](https://github.com/wieerwill/advent_of_code_2023/actions/workflows/lint.yml/badge.svg)
-![Completed](https://img.shields.io/badge/days%20completed-17-red)
-![Stars](https://img.shields.io/badge/stars%20⭐-34-yellow)
+![Completed](https://img.shields.io/badge/days%20completed-18-red)
+![Stars](https://img.shields.io/badge/stars%20⭐-37-yellow)
 ![License](https://img.shields.io/github/license/wieerwill/advent_of_code_2023.svg)
 
 Welcome to my repository where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023). Advent of Code is an annual online event where participants solve a series of programming puzzles released daily from December 1st until December 25th. Each puzzle is a fun and unique challenge designed to test problem-solving skills.
@@ -50,9 +50,9 @@ I aim to complete each day's puzzle on the same day, but as with any challenge, 
 | 14  | ✅       | ❓       | [Day14 README](/Day14/README.md) |
 | 15  | ✅       | ✅       | [Day15 README](/Day15/README.md) |
 | 16  | ✅       | ✅       | [Day16 README](/Day16/README.md) |
-| 17  | ✅       | ❓       | [Day17 README](/Day17/README.md) |
+| 17  | ✅       | ✅       | [Day17 README](/Day17/README.md) |
 | 18  | ✅       | ✅       | [Day18 README](/Day18/README.md) |
-| 19  | ❓       | ❓       | [Day19 README](/Day19/README.md) |
+| 19  | ✅       | ✅       | [Day19 README](/Day19/README.md) |
 | 20  | ❓       | ❓       | [Day20 README](/Day20/README.md) |
 | 21  | ❓       | ❓       | [Day21 README](/Day21/README.md) |
 | 22  | ❓       | ❓       | [Day22 README](/Day22/README.md) |
