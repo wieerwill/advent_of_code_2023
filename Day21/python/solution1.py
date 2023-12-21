@@ -1,14 +1,15 @@
 from collections import deque
 
+
 def read_grid(file_path):
     """Reads the grid from a file and returns it along with the starting position."""
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         grid = [list(line.strip()) for line in file.readlines()]
 
     start = None
     for i, row in enumerate(grid):
         for j, cell in enumerate(row):
-            if cell == 'S':
+            if cell == "S":
                 start = (i, j)
                 break
         if start:
@@ -17,6 +18,7 @@ def read_grid(file_path):
     assert start is not None, "Starting position 'S' not found in the grid."
     print(f"Grid loaded from {file_path}. Start position: {start}")
     return grid, start
+
 
 def bfs(grid, start):
     """Performs BFS on the grid to track the minimum steps to each plot."""
@@ -33,17 +35,24 @@ def bfs(grid, start):
         else:
             for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nx, ny = x + dx, y + dy
-                if 0 <= nx < len(grid) and 0 <= ny < len(grid[0]) and grid[nx][ny] == '.' and (nx, ny) not in distances:
+                if (
+                    0 <= nx < len(grid)
+                    and 0 <= ny < len(grid[0])
+                    and grid[nx][ny] == "."
+                    and (nx, ny) not in distances
+                ):
                     queue.append((nx, ny, step + 1))
 
     print(f"BFS completed. Number of plots visited: {len(distances)}")
     return distances
+
 
 def count_reachable_plots(distances, steps):
     """Counts the number of plots reachable in exactly the given number of steps."""
     count = sum(1 for d in distances.values() if d == steps)
     print(f"Number of plots reachable in exactly {steps} steps: {count}")
     return count
+
 
 def run_test():
     """Runs the algorithm with the test data and asserts the result."""
@@ -53,6 +62,7 @@ def run_test():
     test_result = count_reachable_plots(distances, 64)
     assert test_result == 16, f"Test failed: Expected 16, got {test_result}"
     print("Test passed successfully.")
+
 
 def main():
     """Main function to run the algorithm with the actual puzzle data."""
@@ -68,6 +78,7 @@ def main():
         print(f"File not found error: {fnfe}")
     except Exception as e:
         print(f"Unexpected error: {e}")
+
 
 if __name__ == "__main__":
     main()

@@ -7,7 +7,7 @@ type Workflows = { [key: string]: [WorkflowRules, string] };
 
 function parseInput(filePath: string): Workflows {
     const lines = fs.readFileSync(filePath, 'utf-8').split('\n').filter(line => line);
-    let workflows: Workflows = {};
+    const workflows: Workflows = {};
     let currentWorkflow: string[] = [];
 
     for (const line of lines) {

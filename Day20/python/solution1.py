@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def process_modules(filename, debug=False):
     """
     Reads the module configuration from a file, initializes the modules, and simulates the pulse propagation.
@@ -40,7 +41,9 @@ def process_modules(filename, debug=False):
             name, target, pulse = queue.popleft()
 
             if debug:
-                print(f"Iteration {iteration}: Processing {target}, Pulse: {'High' if pulse else 'Low'}")
+                print(
+                    f"Iteration {iteration}: Processing {target}, Pulse: {'High' if pulse else 'Low'}"
+                )
 
             if target not in modules:
                 continue
@@ -65,9 +68,12 @@ def process_modules(filename, debug=False):
                     low += 1
 
             if debug:
-                print(f"Iteration {iteration}: {target} -> {'High' if new_pulse else 'Low'} to {module[2]}")
+                print(
+                    f"Iteration {iteration}: {target} -> {'High' if new_pulse else 'Low'} to {module[2]}"
+                )
 
     return low * high
+
 
 def test():
     """
@@ -75,8 +81,11 @@ def test():
     """
     expected_result = 11687500  # Replace with the expected result of the test input
     test_result = process_modules("../test.txt", debug=True)
-    assert test_result == expected_result, f"Test failed: Expected {expected_result}, got {test_result}"
+    assert (
+        test_result == expected_result
+    ), f"Test failed: Expected {expected_result}, got {test_result}"
     print(f"Test passed with result: {test_result}")
+
 
 def main():
     """
@@ -93,6 +102,7 @@ def main():
         print("Stopping execution due to test failure.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()
